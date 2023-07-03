@@ -1,2 +1,6 @@
 Flask
+flask-cors
+Flask-SQLAlchemy
+flask-migrate
+python-dotenv
 Gunicorn
