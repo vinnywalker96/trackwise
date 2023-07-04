@@ -3,4 +3,9 @@ flask-cors
 Flask-SQLAlchemy
 flask-migrate
 python-dotenv
+flask-wtf
+flask-admin
+flask-login
+email-validator
+flask-bootstrap
 Gunicorn
