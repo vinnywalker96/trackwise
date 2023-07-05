@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block app_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table">
+               <thead>
+                <tr>
+                <th scope="col">Product Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Category</th>
+                <th scope="col">Description</th>
+                </tr>
+               </thead>
+               <tbody>
+                {% for product in context.products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.category }}</td>
+                    <td>{{ product.description }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            
+        </div>
+        <div class="col-md-4">
+            <form method="POST">
+                <h4>Add a New Product</h4>
+                <hr>
+                {{ wtf.quick_form(context.form) }}
+                <br>
+        </div>
+    </div>
+</div>
+
+{% endblock%}

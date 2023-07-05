@@ -13,19 +13,19 @@
                             <div class="card text-center p-3">
                                 <h4>Registered Users</h4>
 
-                                <h3><span class="badge bg-primary rounded-pill">{{ count_users }}</span></h3>
+                                <h3><span class="badge bg-primary rounded-pill">{{ context.count_users }}</span></h3>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="card text-center p-3">
                                 <h4>Total Orders</h4>
-                                <h3><span class="badge bg-primary rounded-pill">{{ count_orders }}</span></h3>
+                                <h3><span class="badge bg-primary rounded-pill">{{ context.count_orders }}</span></h3>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="card text-center p-3">
                                 <h4>All Products <i class="fa-thin fa-users"></i></h4>
-                                <h3><span class="badge bg-primary rounded-pill">{{ count_products }}</span></h3>
+                                <h3><span class="badge bg-primary rounded-pill">{{ context.count_products }}</span></h3>
                             </div>
                         </div>
                     </div>
@@ -34,5 +34,9 @@
         </div>
     </div>
 </div>
+
+
+
+
 
 {% endblock %}

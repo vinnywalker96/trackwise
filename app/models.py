@@ -3,6 +3,11 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
+CATEGORY = (
+    ("Stationary", "Stationary"),
+    ("Electronics", "Electronics"),
+    ("Food", "Food"),
+)
 
 class User(UserMixin, db.Model):
     __tablename__ = "user"
