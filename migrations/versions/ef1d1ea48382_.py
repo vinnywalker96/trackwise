@@ -1,8 +1,8 @@
-"""posts product order
+"""empty message
 
-Revision ID: e3393a1b699d
+Revision ID: ef1d1ea48382
 Revises: 
-Create Date: 2023-07-04 10:41:10.044539
+Create Date: 2023-07-05 23:22:11.950615
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e3393a1b699d'
+revision = 'ef1d1ea48382'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,12 +39,12 @@ def upgrade():
 
     op.create_table('order',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('product_id', sa.Integer(), nullable=True),
-    sa.Column('created_by_id', sa.Integer(), nullable=True),
+    sa.Column('product', sa.Integer(), nullable=True),
+    sa.Column('created_by', sa.Integer(), nullable=True),
     sa.Column('order_quantity', sa.Integer(), nullable=True),
     sa.Column('date', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['created_by_id'], ['user.id'], ),
-    sa.ForeignKeyConstraint(['product_id'], ['product.id'], ),
+    sa.ForeignKeyConstraint(['created_by'], ['user.id'], ),
+    sa.ForeignKeyConstraint(['product'], ['product.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('post',

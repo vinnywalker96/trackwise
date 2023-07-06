@@ -11,7 +11,6 @@ from app.forms import RegistrationForm, ProductForm, OrderForm
 
 @app.route('/')
 def index():
-    user = {'username': 'Miguel'}
     return render_template('index.html', title='Home')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -30,7 +29,7 @@ def login():
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('dash')
         return redirect(next_page)
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('login.html', title='Sign In', form=form,)
 
 
 @app.route('/logout')
@@ -116,11 +115,12 @@ def orders():
     orders = Order.query.all()
     form = OrderForm()
     if request.method == 'POST'  and form.validate_on_submit():
-        
+
         order = Order(product=form.product.data,
                     order_quantity=form.order_quantity.data, 
-                    create_order=form.create_order.data)
-        order.created_by = current_user
+                    created_by=form.current_user.data
+                    )
+        
         db.session.add(order)
         db.session.commit()
         return redirect(url_for('orders'))

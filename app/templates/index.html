@@ -3,7 +3,13 @@
 {% block title %}
     {% if title %}{{ title }} - TrackWise{% else %}Welcome to TrackWise{% endif %}
 {% endblock %}
+{% block head %}
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
+
+{{ super() }}
+{% endblock%}
 {% block navbar %}
     <nav class="navbar navbar-default">
         <div class="container">
@@ -46,129 +52,130 @@
         {% block app_content %}{% endblock %}
        
     </div>
-    <section class="home-section section-hero overlay slanted" id="home-section">
 
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-md-11 text-center">
-                    <h1>TrackWise</h1>
-                    <div class="mx-auto w-75">
-                        <p>A niche advisory firm, focusing on impact focused entities across Sub-Saharan Africa.</p>
-                    </div>
-                    <p class="mt-5"><a href="contact.php" class="btn btn-outline-white btn-md ">Get in touch</a></p>
-                </div>
-            </div>
+     <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <h1  id='header'data-aos="fade-up">We offer comprehension Inventory management System</h1>
+          <h2 data-aos="fade-up" data-aos-delay="400">System designed to streamline and optimize your inventory operations</h2>
+          <div data-aos="fade-up" data-aos-delay="600">
+          </div>
         </div>
-
-        <!-- VIDEO -->
-        <div class="video-container">
-            <video autoplay loop="true">
-                <source type="video/mp4" src="videos/video.mp4">
-            </video>
+        <div class="col-lg-5 hero-img" data-aos="zoom-out" data-aos-delay="200">
+          <img src="{{ url_for('static', filename='img/hero-img.png')}}" class="img-thumbnail" alt="">
         </div>
+      </div>
+    </div>
 
-        <a href="#about-us-section" class="scroll-button smoothscroll">
-            <span class=" icon-keyboard_arrow_down"></span>
-        </a>
+  </section><!-- End Hero -->
 
-    </section>
+  <main id="main">
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
 
+      <div class="container" data-aos="fade-up">
+        <div class="row gx-0">
 
-<section class="site-section about-us-section" id="about-us-section">
-            <div class="container">
-
-                <div class="row mb-5 pt-0 site-section">
-                    <div class="col-md-6 align-self-center">
-                        <h2 class="section-title mb-4">Who Are We?</h2>
-                        
-
-                        <p>Welcome to TrackWise, your comprehensive inventory management system designed to streamline and
-                             optimize your inventory operations.</p>
-                        <p>With TrackWise, you can effortlessly track, manage, and control your inventory, 
-                            ensuring smooth and efficient business operations. </p>
-                        <p class="mt-4"><a href="about.html" class="special_link">Read more about us</a></p>
-                    </div>
-                    <div class="col-md-5 ml-auto img-overlap">
-                        <div class="img-1"><img src="img/about.png" alt="Image" class="img-fluid img-shadow"></div>
-                    </div>
-                </div>
-
+          <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="content">
+              <h3>Who We Are</h3>
+              <h2>TrackWise, you can effortlessly track, manage, and control your inventory, ensuring smooth and efficient business operations.</h2>
+              <p>
+                Our user-friendly interface and robust features empower you to take control of your inventory management process. From tracking stock levels to monitoring inventory movement, 
+                TrackWise provides you with real-time visibility into your inventory data
+              </p>
             </div>
-        </section>
+          </div>
 
-        <!-- SERVICES -->
-        <section class="site-section services-section bg-light block__62849" id="services-section">
-            <div class="container">
-                <div class="row mb-5">
-                    <div class="col-12 text-center" data-aos="fade">
-                        
-                        <h2 class="section-title mb-3">Services</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class=" col-md-3 col-lg-6 mb-4 mb-lg-5">
+          <div class="col-md-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
+            <img src="{{ url_for('static', filename='img/about.png')}}" class="img-fluid" alt="Responsive image">
+          </div>
 
-                        <a href="#services-section" class="block__16443 text-center d-block">
-                            <!--              <span class="custom-icon mx-auto"><span class="icon-line-tools d-block"></span></span>-->
-                            <img src="img/hand.png">
-                            <h3>Sustainability</h3>
-                            <p>Strategy and Business Modelling<br>
-                                Programme and Project Management<br>
-                                Integrating sustainable finance principles into decision making and operations</p>
+        </div>
+      </div>
 
-                        </a>
+       <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
 
-                    </div>
-                    <div class=" col-md-3 col-lg-6 mb-4 mb-lg-5">
-
-                        <a href="#services-section" class="block__16443 text-center d-block">
-                            <!--              <span class="custom-icon mx-auto"><span class="icon-line-lightbulb d-block"></span></span>-->
-                            <img src="img/People.png">
-                            <h3>Risk Advisory</h3>
-                            <p>Risk Appetite<br>
-                                Cybersecurity readiness<br>
-                                Third party and Reputational Risk<br>
-                                Internal Credit Rating and Pricing<br>
-                                Insurance adequacy</p>
-                        </a>
-
-                    </div>
-                    <div class=" col-md-3 col-lg-6 mb-4 mb-lg-5">
-
-                        <a href="#services-section" class="block__16443 text-center d-block">
-                            <!--              <span class="custom-icon mx-auto"><span class="icon-line-laptop d-block"></span></span>-->
-                            <img src="img/Governance.png">
-                            <h3>Governance &amp; Ethics</h3>
-                            <p> Ethics Barometer<br>
-                                Board Effectiveness Reviews <br>
-                                Delegation of Authority<br>
-                                Framework and Policies
-                                </p>
-                        </a>
-
-                    </div>
-                    <div class=" col-md-3 col-lg-6 mb-4 mb-lg-5">
-
-                        <a href="#services-section" class="block__16443 text-center d-block">
-                            <img src="img/Auditor.png">
-                            <h3>Internal Audit &amp; Assurance</h3>
-                            <p>Internal Audit<br>
-                                Integrated Assurance<br>
-                                Quality Assurance Reviews<br>
-                                Continuous Control Assessments</p>
-                        </a>
-
-                    </div>
-
-
-                </div>
-
-
+        <div class="container" data-aos="fade-up">
+  
+          <header class="section-header">
+            <h2>Features</h2>
+            <p></p>
+          </header>
+  
+          <div class="row gy-4">
+  
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+              <div class="service-box blue">
+                <i class="ri-discuss-line icon"></i>
+                <h3>Inventory Tracking</h3>
+                <p>Easily track your inventory quantities, locations, and movements across multiple warehouses or storage facilities.</p>
+                
+              </div>
             </div>
-        </section>
+  
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+              <div class="service-box orange">
+                <i class="ri-discuss-line icon"></i>
+                <h3>Real-time Updates</h3>
+                <p>Get instant updates on stock levels, low inventory alerts, and replenishment reminders, ensuring you never run out of essential items.</p>
+                
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+              <div class="service-box green">
+                <i class="ri-discuss-line icon"></i>
+                <h3>Purchase Order Management</h3>
+                <p>Create, track, and manage purchase orders, ensuring timely procurement and minimizing stockouts.</p>
+                
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+              <div class="service-box red">
+                <i class="ri-discuss-line icon"></i>
+                <h3>Barcode Scanning</h3>
+                <p>fortlessly manage inventory using barcode scanning technology, ensuring accurate and efficient inventory control.</p>
+                <p>Coming Soon!</p>
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+              <div class="service-box purple">
+                <i class="ri-discuss-line icon"></i>
+                <h3>Reporting and Analytics</h3>
+                <p>Gain valuable insights into your inventory performance with customizable reports and analytics, allowing you to identify trends, optimize stock levels, and make informed decisions.</p>
+                
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="700">
+              <div class="service-box pink">
+                <i class="ri-discuss-line icon"></i>
+                <h3>Integration Capabilities</h3>
+                <p>Seamlessly integration with other business systems/platforms, and shipping providers for a cohesiveworkflow.</p>
+                <p>Coming Soon!</p>
+              </div>
+            </div>
+  
+          </div>
+  
+        </div>
+  
+
+      
+    </main>
+
+
     <div class="bg-light">
         <footer class="py-3 my-4">
           <p class="text-center text-muted">&copy; 2023 TrackWise App, Inc.</p>
         </footer>
     </div>
+    
 {% endblock %}

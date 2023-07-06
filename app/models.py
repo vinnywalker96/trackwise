@@ -17,11 +17,11 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     
-    @property
-    def password(self):
-        raise AttributeError('Password is not readable')
+    # @property
+    # def password(self):
+    #     raise AttributeError('Password is not readable')
     
-    @password.setter
+    # @password.setter
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
         
@@ -62,13 +62,13 @@ class Product(db.Model):
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=True)
-    created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    product = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=True)
+    created_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     order_quantity = db.Column(db.Integer, nullable=True)
     date = db.Column(db.DateTime, nullable=True, default=datetime.utcnow)
 
-    product = db.relationship('Product', backref='orders')
-    created_by = db.relationship('User', backref='orders')
+  
 
     def __str__(self):
         return f"{self.product.name} ordered quantity {self.order_quantity}"
+    

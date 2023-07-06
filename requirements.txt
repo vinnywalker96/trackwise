@@ -8,4 +8,5 @@ flask-admin
 flask-login
 email-validator
 flask-bootstrap
+psycopg2-binary
 Gunicorn
