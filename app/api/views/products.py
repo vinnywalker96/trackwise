@@ -4,11 +4,11 @@ from flask import flash, redirect, jsonify
 from app import db
 
 
-@app_views.route('/products', method=['GET'])
+@app_views.route('/products', methods=['GET'])
 def delete_product(id):
     product = Product.query.all()
   
-    return 
+    return {}
         
     
 
