@@ -3,7 +3,7 @@ from flask_wtf.form import _Auto
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, IntegerField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app.models import User, CATEGORY, Product
-from flask_login import current_user
+
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -13,6 +13,8 @@ class LoginForm(FlaskForm):
     
     
 class RegistrationForm(FlaskForm):
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -38,14 +40,25 @@ class ProductForm(FlaskForm):
     quantity = IntegerField("Quantity", validators=[DataRequired()])
     description = StringField("Description", validators=[DataRequired()])
     add = SubmitField('Add')
+
     
 class OrderForm(FlaskForm):
-    product = SelectField("Product",validators=[DataRequired()])
+    product = SelectField("Product" ,validators=[DataRequired()])
     order_quantity = IntegerField("Quantity", validators=[DataRequired()])
-    created_by = SelectField("Created By", )
+    created_by = SelectField("Created By",validators=[DataRequired()])
     create_order = SubmitField('Create Order')
     
     def __init__(self, *args, **kwargs):
         super(OrderForm, self).__init__(*args, **kwargs)
-        self.product.choices = [(product.id, product.name) for product in Product.query.all()]
+        self.product.choices = [(product.name) for product in Product.query.all()]
+        self.created_by.choices = [(user.username) for user in User.query.all()]
+        
+        
+class DeleteProductForm(FlaskForm):
+    name = SelectField("Name" ,validators=[DataRequired()])
+    delete = SubmitField("Delete")
+    
+    def __init__(self, *args, **kwargs):
+        super(DeleteProductForm, self).__init__(*args, **kwargs)
+        self.name.choices = [(product.name) for product in Product.query.all()]
         

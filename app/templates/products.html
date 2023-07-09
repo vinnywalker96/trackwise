@@ -4,14 +4,16 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <table class="table">
                <thead>
                 <tr>
+                <th scope="col">Product ID</th>
                 <th scope="col">Product Name</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Category</th>
                 <th scope="col">Description</th>
+                
                 </tr>
                </thead>
                <tbody>
@@ -25,9 +27,11 @@
                 {% endfor %}
             </tbody>
             </table>
-            
+           
+            <a class="nav-link text-primary active" aria-current="page" href="{{url_for('main.delete_product') }}">Delete Product</a>
+           
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <form method="POST">
                 <h4>Add a New Product</h4>
                 <hr>
