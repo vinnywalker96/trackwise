@@ -8,6 +8,7 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import CSRFProtect
 
 
+
   
 db = SQLAlchemy()
 migrate = Migrate()  
@@ -39,6 +40,8 @@ app.register_blueprint(app_views)
     
     
 CORS(app, resources={r'/*': {'origins': '*'}})
+
+
     
    
 

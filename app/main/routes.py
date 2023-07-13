@@ -136,7 +136,14 @@ def orders():
     }
     return render_template('orders.html',title="Orders", context=context)
 
-@bp.route('/product/', methods=['GET','POST'])
+@bp.route('/product/', methods=['GET','DELETE', 'POST'])
 def delete_product():
     form = DeleteProductForm()
+    if request.method == "POST":
+        product = Product(name=form.name.data,
+                          id=form.id.data)
+        db.session.delete(product)
+        db.session.commit()
+        return redirect(url_for('main.products'))
+        
     return render_template('delete_product.html', title="Delete User", form=form)

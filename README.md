@@ -4,43 +4,25 @@
 TrackWise is a user-friendly and efficient inventory management system designed to streamline and simplify the process of tracking inventory.This system allows you to easily add and remove items, track stock quantities, set reorder points, and receive notifications when inventory reaches critical levels. Its intuitive interface and powerful features make TrackWise an ideal solution for businesses of all sizes, helping them optimize inventory control, reduce stockouts, and improve overall operational efficiency.
 
 
-## Features
+## Installation
+- Clone this repository: git clone https://github.com/vinnywalker96/trackwise
+- Access Directory: cd trackwise
+- Create Virtual enviroment: python3 -m venv .venv
+- Activte Virtual Enviroment:  . .venv/bin/activate
+- pip install -r requirements.txt
+- run: flask run
+## Usage/Examples
 
-- Create users
-- Add stock
-- Delete stock
-- Create and Delete orders
 
 
+
+## Contributing
 ## Authors
 
 - [@vinnywalker96](https://github.com/vinnywalker96)
 
 
-## Run Locally
+## License
 
-Clone the project
+[MIT](https://choosealicense.com/licenses/mit/)
 
-```bash
-  git clone https://link-to-project
-```
-
-Go to the project directory
-
-```bash
-  cd my-project
-```
-
-Install dependencies
-
-```bash
-  flask run
-```
-
-
-
-## Tech Stack
-
-**Client:** Bootsrap and jinja
-
-**Server:** Flask and sqlite

@@ -8,7 +8,7 @@
             <table class="table">
                <thead>
                 <tr>
-                <th scope="col">Product ID</th>
+                <th scope="col">ID</th>
                 <th scope="col">Product Name</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Category</th>
@@ -19,6 +19,7 @@
                <tbody>
                 {% for product in context.products %}
                 <tr>
+                    <td>{{ product.id }}</td>
                     <td>{{ product.name }}</td>
                     <td>{{ product.quantity }}</td>
                     <td>{{ product.category }}</td>
