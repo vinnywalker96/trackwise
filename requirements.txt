@@ -8,5 +8,9 @@ flask-login
 email-validator
 flask-bootstrap
 psycopg2-binary
+flask-mail
+pyjwt
+flask-marshmallow
+marshmallow-sqlalchemy
 Gunicorn
 

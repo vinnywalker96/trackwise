@@ -1,43 +1,124 @@
 {% extends 'base.html' %}
-{% import 'bootstrap/wtf.html' as wtf %}
+
 {% block app_content %}
 
 <div class="container">
     <div class="row">
-        <div class="col-md-9">
-            <table class="table">
-               <thead>
-                <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Product Name</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Category</th>
-                <th scope="col">Description</th>
-                
-                </tr>
-               </thead>
-               <tbody>
-                {% for product in context.products %}
-                <tr>
-                    <td>{{ product.id }}</td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.quantity }}</td>
-                    <td>{{ product.category }}</td>
-                    <td>{{ product.description }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-            </table>
-           
-            <a class="nav-link text-primary active" aria-current="page" href="{{url_for('main.delete_product') }}">Delete Product</a>
-           
-        </div>
-        <div class="col-md-3">
-            <form method="POST">
-                <h4>Add a New Product</h4>
-                <hr>
-                {{ wtf.quick_form(context.form) }}
-                <br>
+        <div class="col md-12">
+            <div class="jumbotron b-4">
+                <h2>Manage <b>Products</b><button type="button" class="btn btn-success float-right"
+                    data-toggle="modal" data-target="#mymodal">Add New Product</button></h2>
+         
+                <table class="table table-hover table-dark ">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Description</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in context.products %}
+                        <tr>
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.category }}</td>
+                            <td>{{ product.quantity }}</td>
+                            <td>{{ product.description }}</td>
+                            <td>
+                                <a href="/update/{{product.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{product.id}}">Edit</a>
+                                <a href="/delete/{{product.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete')" >Delete</a>
+                        </tr>
+                          
+
+                          <div id="modaledit{{product.id}}" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-dark">
+                                        <h4 class="modal-title">Update Product Information</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{ url_for('main.update')}}"  method="POST">
+                                            {{ context.form.csrf_token }}
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input type="hidden" name="id" value="{{product.id}}">
+                                                <input type="text" name="name" required="1" class="form-control" value="{{product.name}}">
+                                                
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="category">Category</label>
+                                                <input type="text" name="category" required="1" class="form-control" value="{{product.category}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="quantity">Quantity</label>
+                                                <input type="number" name="quantity" required="1" class="form-control" value="{{ product.quantity}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <input type="text" name="description" required="1" class="form-control" value="{{ product.description}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-success">Update Product</button>
+                                            </div>
+        
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </form>
+                                    </div>
+                                     
+                                </div>
+                                
+                            </div>
+                            
+                         </div>
+                         {% endfor %}  
+                    </table>
+                </div>
+                <div id="mymodal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-dark">
+                                <h4 class="modal-title">Add New Product</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action=""  method="POST">
+                                    {{ context.form.csrf_token }}
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input type="text" name="name" required="1" class="form-control">
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="category">Category</label>
+                                        <input type="text" name="category" required="1" class="form-control" value="{{context.products.category}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="quantity">Quantity</label>
+                                        <input type="number" name="quantity" required="1" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea name="description" required="1" class="form-control"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success">Add Product</button>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </form>
+                            </div>
+                             
+                        </div>
+                        
+                    </div>
+                    
+                 </div>
+
         </div>
     </div>
 </div>

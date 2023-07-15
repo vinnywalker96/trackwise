@@ -1,10 +1,15 @@
 """Creates the database models for the application.
 """
-from app import db, login
+from app import db, login, ma
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-import uuid
+import base64
+import os
+from datetime import datetime, timedelta
+from flask import url_for
+
+
 CATEGORY = (
     ("Stationary", "Stationary"),
     ("Electronics", "Electronics"),
@@ -25,7 +30,9 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(64), index=True, unique=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
+   
     password_hash = db.Column(db.String(128))
+    
     
     
     # @property
@@ -77,12 +84,15 @@ class Product(db.Model):
     category = db.Column(db.String(20), nullable=True)
     quantity = db.Column(db.Integer, nullable=True)
     description = db.Column(db.String(200), nullable=True)
-    
-    def __init__(self, *args, **kwargs):
-        super(Product, self).__init__(*args, **kwargs)
-        self.product_id = str(uuid.uuid4())
+    date_created = db.Column(db.DateTime, nullable=True, default=datetime.utcnow())
     
 
+    def __init__(self, name, category, quantity, description):
+        self.name = name
+        self.category = category
+        self.quantity = quantity
+        self.description = description
+        
     def __str__(self):
         return self.name
 
@@ -93,7 +103,8 @@ class Order(db.Model):
     product = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=True)
     created_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     order_quantity = db.Column(db.Integer, nullable=True)
-    date = db.Column(db.DateTime, nullable=True, default=datetime.utcnow())
+    date_created = db.Column(db.DateTime, nullable=True, default=datetime.utcnow())
+    
     
     
     
@@ -111,3 +122,12 @@ class Order(db.Model):
     def __str__(self):
         return f"{self.product.name} ordered quantity {self.order_quantity}"
     
+#Create a schema for the product
+class ProductList(ma.Schema):
+    """Class ProductCategory is a model for the product category schema in the database."""
+    class Meta:
+        fields = ('name', 'category', 'quantity', 'description', 'date_created') 
+        
+#create instance for schema
+productlist_schema = ProductList(many=False)
+productlists_schema = ProductList(many=True)

@@ -6,15 +6,16 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_wtf import CSRFProtect
-
-
-
+from flask_mail import Mail
+from flask_marshmallow import Marshmallow
   
 db = SQLAlchemy()
 migrate = Migrate()  
 bootstrap = Bootstrap()
 login = LoginManager()
 csrf = CSRFProtect()
+mail = Mail()
+ma = Marshmallow()
 
 
 
@@ -27,15 +28,12 @@ login.init_app(app)
 bootstrap.init_app(app)
 login.login_view = 'login'
 csrf.init_app(app)
+mail.init_app(app)
+ma.init_app(app)
 
 from app.main import bp as main_bp
     
 app.register_blueprint(main_bp)
-
-    
-from app.api.views import app_views
-    
-app.register_blueprint(app_views)
     
     
     

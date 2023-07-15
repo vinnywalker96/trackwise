@@ -1,10 +1,10 @@
 from app import  db
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from app.forms import LoginForm
-from app.models import User,Order, Product
+from app.models import User,Order, Product, ProductList, productlist_schema, productlists_schema, CATEGORY
 from flask_login import current_user, login_user, logout_user
 from flask_login import login_required
-from flask import request
+from flask import request, jsonify
 from werkzeug.urls import url_parse
 from app.forms import RegistrationForm, ProductForm, OrderForm, DeleteProductForm
 from app.main import bp
@@ -106,12 +106,48 @@ def products():
                     description=form.description.data)
         db.session.add(product)
         db.session.commit()
+        flash("Product, succesfully added!")
         return redirect(url_for('main.products'))
     context = {
         "products": products,
-        "form": form
+        "form": form,
+        "category": CATEGORY
     }
     return render_template('products.html',title="Products", context=context )
+
+@bp.route('/update', methods=['GET', 'POST'])
+@login_required
+def update():
+  
+    if request.method == "POST":
+        data = Product.query.get(request.form.get('id'))
+          
+        data.name = request.form['name']
+        data.category = request.form['category']
+        data.quantity = request.form['quantity']
+        data.description = request.form['description']
+        db.session.merge(data)
+        db.session.commit()
+        flash("Product, succesfully updated!")
+        return redirect(url_for('main.products'))
+
+@bp.route('/delete/<id>/', methods=['GET', 'POST'])
+def delete(id):
+    data = db.get_or_404(Product, id)
+    db.session.delete(data)
+    db.session.commit()
+    flash("Product, succesfully deleted!")
+    return redirect(url_for('main.products'))
+
+@bp.route('/Delete/<id>/', methods=['GET', 'POST'])
+def Delete(id):
+    data = db.get_or_404(Order, id)
+    db.session.delete(data)
+    db.session.commit()
+    flash("Order, succesfully deleted!")
+    return redirect(url_for('main.orders'))
+
+
 
 
 @bp.route('/orders', methods=['GET', 'POST'])
@@ -128,6 +164,7 @@ def orders():
         order.set_current_user(form.created_by.data)
         db.session.add(order)
         db.session.commit()
+        flash("Product, succesfully created!")
         return redirect(url_for('main.orders'))
     context = {
         "orders": orders,
@@ -147,3 +184,10 @@ def delete_product():
         return redirect(url_for('main.products'))
         
     return render_template('delete_product.html', title="Delete User", form=form)
+
+@bp.route('/todo', methods=['GET'])
+def get_products():
+    products = Product.query.all()
+    result = productlists_schema.dump(products)
+    return jsonify(result)
+

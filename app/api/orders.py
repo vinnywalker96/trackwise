@@ -1,4 +1,4 @@
-from app.api.views import app_views
+from app.api import app_views
 from app.models import Order
 from flask import jsonify
 from app import db
