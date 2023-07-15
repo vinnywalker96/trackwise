@@ -115,6 +115,22 @@ def products():
     }
     return render_template('products.html',title="Products", context=context )
 
+@bp.route('/Update', methods=['GET', 'POST'])
+@login_required
+def Update():
+  
+    if request.method == "POST":
+        data = Order.query.get(request.form.get('id'))
+          
+        data.name = request.form['name']
+        data.category = request.form['category']
+        data.quantity = request.form['quantity']
+        data.description = request.form['description']
+        db.session.merge(data)
+        db.session.commit()
+        flash("Product, succesfully updated!")
+        return redirect(url_for('main.orders'))
+
 @bp.route('/update', methods=['GET', 'POST'])
 @login_required
 def update():
@@ -162,9 +178,10 @@ def orders():
                     order_quantity=form.order_quantity.data, 
                     )
         order.set_current_user(form.created_by.data)
+        order.set_date(form.date_created.data)
         db.session.add(order)
         db.session.commit()
-        flash("Product, succesfully created!")
+        flash("Order, succesfully created!")
         return redirect(url_for('main.orders'))
     context = {
         "orders": orders,
@@ -185,9 +202,5 @@ def delete_product():
         
     return render_template('delete_product.html', title="Delete User", form=form)
 
-@bp.route('/todo', methods=['GET'])
-def get_products():
-    products = Product.query.all()
-    result = productlists_schema.dump(products)
-    return jsonify(result)
+
 

@@ -4,6 +4,7 @@ from flask_wtf.form import _Auto
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, IntegerField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app.models import User, CATEGORY, Product
+from datetime import datetime
 
 
 class LoginForm(FlaskForm):
@@ -54,12 +55,14 @@ class OrderForm(FlaskForm):
     product = SelectField("Product" ,validators=[DataRequired()])
     order_quantity = IntegerField("Quantity", validators=[DataRequired()])
     created_by = SelectField("Created By",validators=[DataRequired()])
+    date_created = StringField("Date Created", validators=[DataRequired()])
     create_order = SubmitField('Create Order')
     
     def __init__(self, *args, **kwargs):
         super(OrderForm, self).__init__(*args, **kwargs)
         self.product.choices = [(product.name) for product in Product.query.all()]
         self.created_by.choices = [(user.username) for user in User.query.all()]
+        self.date_created.data =  datetime.today().strftime('%Y-%m-%d')
         
         
 class DeleteProductForm(FlaskForm):
