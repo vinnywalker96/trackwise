@@ -6,7 +6,7 @@ from flask_login import current_user, login_user, logout_user
 from flask_login import login_required
 from flask import request, jsonify
 from werkzeug.urls import url_parse
-from app.forms import RegistrationForm, ProductForm, OrderForm, DeleteProductForm
+from app.forms import RegistrationForm, ProductForm, OrderForm
 from app.main import bp
 
 @bp.route('/')
@@ -118,17 +118,16 @@ def products():
 @bp.route('/Update', methods=['GET', 'POST'])
 @login_required
 def Update():
-  
     if request.method == "POST":
         data = Order.query.get(request.form.get('id'))
           
-        data.name = request.form['name']
-        data.category = request.form['category']
-        data.quantity = request.form['quantity']
-        data.description = request.form['description']
+        data.product = request.form['product']
+        data.order_quantity = request.form['order_quantity']
+        data.created_by = request.form['created_by']
+        
         db.session.merge(data)
         db.session.commit()
-        flash("Product, succesfully updated!")
+        flash("Order, succesfully updated!")
         return redirect(url_for('main.orders'))
 
 @bp.route('/update', methods=['GET', 'POST'])
@@ -165,42 +164,37 @@ def Delete(id):
 
 
 
-
 @bp.route('/orders', methods=['GET', 'POST'])
 @login_required
 def orders():
     orders = Order.query.all()
+    products = Product.query.all()
     user = User.query.filter_by().first_or_404()
-    form = OrderForm()
-    if request.method == 'POST'  and form.validate_on_submit():
+    form = OrderForm(request.form)
 
-        order = Order(product=form.product.data,
-                    order_quantity=form.order_quantity.data, 
-                    )
-        order.set_current_user(form.created_by.data)
-        order.set_date(form.date_created.data)
-        db.session.add(order)
+    if form.validate() and request.method == 'POST':
+        product = form.product.data
+        created_by = form.created_by.data
+        order_quantity = form.order_quantity.data
+        date_created = form.date_created.data
+
+        new_order = Order(product=product, created_by=created_by, order_quantity=order_quantity, date_created=date_created)
+        db.session.add(new_order)
         db.session.commit()
         flash("Order, succesfully created!")
         return redirect(url_for('main.orders'))
     context = {
         "orders": orders,
         "form": form,
-        "user": user
+        "user": user,
+        "products": products
     }
     return render_template('orders.html',title="Orders", context=context)
 
-@bp.route('/product/', methods=['GET','DELETE', 'POST'])
-def delete_product():
-    form = DeleteProductForm()
-    if request.method == "POST":
-        product = Product(name=form.name.data,
-                          id=form.id.data)
-        db.session.delete(product)
-        db.session.commit()
-        return redirect(url_for('main.products'))
-        
-    return render_template('delete_product.html', title="Delete User", form=form)
+
+
+
+
 
 
 

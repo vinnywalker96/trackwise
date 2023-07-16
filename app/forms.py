@@ -1,7 +1,7 @@
 """Forms  Models for the application."""
 from flask_wtf import FlaskForm
 from flask_wtf.form import _Auto
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, IntegerField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, IntegerField, EmailField,DateTimeLocalField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app.models import User, CATEGORY, Product
 from datetime import datetime
@@ -20,7 +20,7 @@ class RegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = EmailField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
@@ -55,23 +55,19 @@ class OrderForm(FlaskForm):
     product = SelectField("Product" ,validators=[DataRequired()])
     order_quantity = IntegerField("Quantity", validators=[DataRequired()])
     created_by = SelectField("Created By",validators=[DataRequired()])
-    date_created = StringField("Date Created", validators=[DataRequired()])
-    create_order = SubmitField('Create Order')
+    date_created = DateTimeLocalField("Date Created", validators=[DataRequired()], default=datetime.utcnow())
+    add = SubmitField('Add')
+
     
     def __init__(self, *args, **kwargs):
         super(OrderForm, self).__init__(*args, **kwargs)
         self.product.choices = [(product.name) for product in Product.query.all()]
         self.created_by.choices = [(user.username) for user in User.query.all()]
-        self.date_created.data =  datetime.today().strftime('%Y-%m-%d')
+        
+      
         
         
-class DeleteProductForm(FlaskForm):
-    """DeleteProductForm is a model for the delete product form in the application."""
-    id = SelectField("ID" ,validators=[DataRequired()])
-    name = SelectField("Name" ,validators=[DataRequired()])
-    
-    def __init__(self, *args, **kwargs):
-        super(DeleteProductForm, self).__init__(*args, **kwargs)
-        self.name.choices = [(product.name) for product in Product.query.all()]
-        self.id.choices = [(product.id) for product in Product.query.all()]
+        
+        
+
         
